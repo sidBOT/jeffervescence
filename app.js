@@ -1,20 +1,35 @@
 const app = {
-    init(formSelector) {
-        this.max = 0
-        document
-        .querySelector(formSelector)
-        .addEventListener('submit', this.addFlick.bind(this))
-    },
+  init(selectors) {
+    this.flicks = []
+    this.max = 0
+    this.list = document.querySelector(selectors.listSelector)
+    document
+      .querySelector(selectors.formSelector)
+      .addEventListener('submit', this.addFlick.bind(this))
+  },
 
-    addFlick(ev) {
-        ev.preventDefault()
-        const f = ev.target
-        const flick = {
-            id: this.max + 1,
-            name: f.flickName.value,
-        }
-        console.log(flick.name, flick.id)
-        this.max++
-    },
+  addFlick(ev) {
+    ev.preventDefault()
+    const f = ev.target
+    const flick = {
+      id: this.max + 1,
+      name: f.flickName.value,
+    }
+
+    const listItem = this.renderListItem(flick)
+    this.list.appendChild(listItem)
+    this.flicks++
+    ++ this.max
+  },
+
+  renderListItem(flick) {
+    const item = document.createElement('li')
+    item.textContent = flick.name
+    return item
+  },
 }
-app.init('#flickform');
+
+app.init({
+  formSelector: '#flick-form',
+  listSelector: '#flick-list'
+})
