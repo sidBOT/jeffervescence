@@ -23,9 +23,6 @@ const app = {
     const listItem = this.renderListItem(flick)
     // this.list.appendChild(listItem)
     this.list.insertBefore(listItem, this.list.firstChild)
-
-    // TODO: Add flick to this.flicks
-
     ++ this.max
     f.flickName.value = ''
   },
@@ -35,9 +32,16 @@ const app = {
     item.classList.remove('template')
     item.querySelector('.flick-name').textContent = flick.name
     item.dataset.id = flick.id
+
+    item.querySelector('.button.remove').addEventListener('click', this.removeFlick)
     return item
   },
+  removeFlick(ev) {
+   ev.target.closest('.flick').remove()
+
+  },  
 }
+
 
 app.init({
   formSelector: '#flick-form',
