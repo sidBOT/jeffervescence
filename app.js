@@ -6,6 +6,9 @@ const app = {
     document
       .querySelector(selectors.formSelector)
       .addEventListener('submit', this.addFlick.bind(this))
+
+      document
+      .querySelector(selectors.formSelector).flickName.focus()
   },
 
   addFlick(ev) {
@@ -18,8 +21,11 @@ const app = {
 
     const listItem = this.renderListItem(flick)
     this.list.appendChild(listItem)
-    this.flicks++
+
+    // TODO: Add flick to this.flicks
+
     ++ this.max
+    f.flickName.value = ''
   },
 
   renderListItem(flick) {
