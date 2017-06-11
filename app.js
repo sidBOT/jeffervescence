@@ -83,13 +83,16 @@ const app = {
 
     this.list.insertBefore(listItem, listItem.previousElementSibling)
 
-    const index = this.movies.findIndex((listItem, i) => {
+    
+    const index = this.flicks.findIndex((listItem, i) => {
       return (listItem.id === this.flicks[i].id)
     })
 
     const temp = this.flicks[index]
     this.flicks[index] = this.flicks[index - 1]
     this.flicks[index - 1] = temp
+    this.save()
+    
   },
 
 
@@ -106,6 +109,7 @@ const app = {
     const temp = this.flicks[index]
     this.flicks[index] = this.flicks[index + 1]
     this.flicks[index + 1] = temp 
+    this.save()
     
 
   },
@@ -113,7 +117,7 @@ const app = {
   favouriteFlick(ev) {
     ev.preventDefault()
     const listItem = ev.target.closest('.flick')
-    if(listItem.fav == true) {
+    if(listItem.fav === true) {
       listItem.style.color = "#ff0000"
       listItem.fav = false;
     }else {
