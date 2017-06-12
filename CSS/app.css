@@ -1,40 +1,36 @@
 .flick.template {
-    display: none;
+  display: none;
 }
 
 .flick {
-    clear: both;
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.25rem;
-    border: 3px solid wheat;
-    transition: 0.40s
+  border: 1px solid #ddd;
+  clear: both;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  transition: 0.25s;
+}
+
+.flick + .flick {
+  border-top: 0;
 }
 
 .flick-name {
-    flex-grow: 1;
-}
-.actions.button-group {
-    margin-bottom: 0;
-}
-.flick + .flick {
-    border-top: 0;
-}
-.actions {
-   
-}
-.flick.fav {
-    background-color: orange;
-    border-color: yellowgreen;
+  flex-grow: 1;
 }
 
-.flick:first-child button.up {
-    background-color: grey;
-    cursor: not-allowed;
-    color: whitesmoke;
+.actions.button-group {
+  margin-bottom: 0;
 }
-.flick:last-child button.down {
-    background-color: grey;
-    cursor: not-allowed;
-    color: whitesmoke;
+
+.flick.fav {
+  background-color: #ffc656;
+  border-color: #ffa807;
+}
+
+.flick:first-child button.move-up,
+.flick:last-child button.move-down {
+  background-color: #ddd;
+  color: #eee;
+  cursor: not-allowed;
 }
