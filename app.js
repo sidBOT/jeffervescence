@@ -75,58 +75,48 @@ const app = {
       .querySelector('button.remove')
       .addEventListener('click', this.removeFlick.bind(this))
       item.querySelector('button.fav').addEventListener('click', this.favouriteFlick.bind(this,flick))
-      item.querySelector('button.down').addEventListener('click', this.down.bind(this))
-      item.querySelector('button.up').addEventListener('click', this.Up.bind(this))
+      item.querySelector('button.down').addEventListener('click', this.down.bind(this,flick))
+      item.querySelector('button.up').addEventListener('click', this.Up.bind(this,flick))
+      item.querySelector('button.edit').addEventListener('click', this.editFlick.bind(this,flick))
 
     return item
   },
 
-  Up(ev) {
+  Up(flick,ev) {
   
     const listItem = ev.target.closest('.flick')
-
-    this.list.insertBefore(listItem, listItem.previousElementSibling)
-
-    
-    const index = this.flicks.findIndex((listItem, i) => {
-      return (listItem.id === this.flicks[i].id)
+    const index = this.flicks.findIndex((currentFlick, i) => {
+      return currentFlick.id === flick.id
     })
-    const temp = this.flicks[index]
-    this.flicks[index] = this.flicks[index-1]
-    this.flicks[index-1] = temp
-    
+    if(index > 0) {
+      this.list.insertBefore(listItem, listItem.previousElementSibling)
+      const temp = this.flicks[index-1]
+      this.flicks[index - 1] = flick
+      this.flicks[index] = temp
+      this.save()
+    }
+
   },
 
 
-  down(ev) {
-    ev.preventDefault()
+  down(flick, ev) {
+    //ev.currentTarget = button//
     const listItem = ev.target.closest('.flick')
-
-
-    this.list.insertBefore(listItem.nextSibling, listItem)
-
-    const index = this.flicks.findIndex((listItem, i) => {
-      return (listItem.id === this.flicks[i].id)
+    const index = this.flicks.findIndex((currentFlick, i) => {
+      return currentFlick.id === flick.id
     })
-
-    const temp = this.flicks[index]
-    this.flicks[index] = this.flicks[index + 1]
-    this.flicks[index + 1] = temp 
-    this.save()
+    if(index < this.flicks.length-1) {
+      this.list.insertBefore(listItem.nextElementSibling, listItem)
+      const temp = this.flicks[index+1]
+      this.flicks[index + 1] = flick
+      this.flicks[index] = temp
+      this.save()
+    }
     
 
   },
 
   favouriteFlick(flick, ev) {
-    // ev.preventDefault()
-    // const listItem = ev.target.closest('.flick')
-    // if(listItem.fav === true) {
-    //   listItem.style.color = "#ff0000"
-    //   listItem.fav = false;
-    // }else {
-    //   listItem.style.color = "black"
-    //   listItem.fav = true;
-    // }
     const listItem = ev.target.closest('.flick')
     flick.fav = !flick.fav
     if(flick.fav) {
@@ -151,6 +141,27 @@ const app = {
 
     listItem.remove()
     this.save()
+  },
+  editFlick(flick, ev) {
+    const btn = ev.currentTarget
+    const listItem = btn.closest('.flick')
+    const nameField = listItem.querySelector('.flick-name')
+    const icon = ev.currentTarget.querySelector('i.fa')
+    if(nameField.isContentEditable) {
+      nameField.contentEditable = false
+      icon.classList.remove('fa-floppy-o')
+      icon.classList.add('fa-pencil')
+      icon.classList.remove('success')
+      flick.name = nameField.textContent
+      this.save()
+    }else {
+      nameField.contentEditable = true
+      nameField.focus()
+      icon.classList.remove('fa-pencil')
+      icon.classList.add('fa-floppy-o')
+      btn.classList.add('success')
+    }
+
   },
 }
 
