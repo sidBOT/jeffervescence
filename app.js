@@ -78,7 +78,7 @@ const app = {
   },
 
   Up(ev) {
-    ev.preventDefault()
+  
     const listItem = ev.target.closest('.flick')
 
     this.list.insertBefore(listItem, listItem.previousElementSibling)
@@ -87,11 +87,9 @@ const app = {
     const index = this.flicks.findIndex((listItem, i) => {
       return (listItem.id === this.flicks[i].id)
     })
-
     const temp = this.flicks[index]
-    this.flicks[index] = this.flicks[index - 1]
-    this.flicks[index - 1] = temp
-    this.save()
+    this.flicks[index] = this.flicks[index-1]
+    this.flicks[index-1] = temp
     
   },
 
@@ -99,6 +97,7 @@ const app = {
   down(ev) {
     ev.preventDefault()
     const listItem = ev.target.closest('.flick')
+
 
     this.list.insertBefore(listItem.nextSibling, listItem)
 
