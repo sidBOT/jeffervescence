@@ -43,7 +43,7 @@ const app = {
     ev.preventDefault()
     const f = ev.target
     const flick = {
-      fav: true,
+      fav: false,
       id: this.max + 1,
       name: f.flickName.value,
     }
@@ -67,10 +67,14 @@ const app = {
       .querySelector('.flick-name')
       .textContent = flick.name
 
+      if(flick.fav) {
+        item.classList.add('fav')
+      }
+
     item
       .querySelector('button.remove')
       .addEventListener('click', this.removeFlick.bind(this))
-      item.querySelector('button.fav').addEventListener('click', this.favouriteFlick.bind(this))
+      item.querySelector('button.fav').addEventListener('click', this.favouriteFlick.bind(this,flick))
       item.querySelector('button.down').addEventListener('click', this.down.bind(this))
       item.querySelector('button.up').addEventListener('click', this.Up.bind(this))
 
@@ -113,17 +117,24 @@ const app = {
 
   },
 
-  favouriteFlick(ev) {
-    ev.preventDefault()
+  favouriteFlick(flick, ev) {
+    // ev.preventDefault()
+    // const listItem = ev.target.closest('.flick')
+    // if(listItem.fav === true) {
+    //   listItem.style.color = "#ff0000"
+    //   listItem.fav = false;
+    // }else {
+    //   listItem.style.color = "black"
+    //   listItem.fav = true;
+    // }
     const listItem = ev.target.closest('.flick')
-    if(listItem.fav === true) {
-      listItem.style.color = "#ff0000"
-      listItem.fav = false;
+    flick.fav = !flick.fav
+    if(flick.fav) {
+      listItem.classList.add('fav')
     }else {
-      listItem.style.color = "black"
-      listItem.fav = true;
+      listItem.classList.remove('fav')
     }
-
+    this.save()
   },
 
   removeFlick(ev) {

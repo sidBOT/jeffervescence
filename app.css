@@ -7,7 +7,8 @@
     display: flex;
     align-items: center;
     padding: 0.75rem 1.25rem;
-    border: 1px solid wheat;
+    border: 3px solid wheat;
+    transition: 0.40s
 }
 
 .flick-name {
@@ -17,8 +18,12 @@
     margin-bottom: 0;
 }
 .flick + .flick {
-    //border-top: 0;
+    border-top: 0;
 }
 .actions {
    
+}
+.flick.fav {
+    background-color: orange;
+    border-color: yellowgreen;
 }
